@@ -16,10 +16,13 @@
             <div class="col-md-4 login-sec">
                 <h2 class="text-center">Login Now</h2>
                 <!-- LOGIN FORM START -->
-                <form class="login-form form">
+                <form class="login-form form" [formGroup]="insertForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label for="UserName" class="text-uppercase">Username</label>
                         <input formControlName="Username" type="text" class="form-control" placeholder="" required autofocus>
+                      <div *ngIf=" ">
+
+                      </div>
                     </div>
                     <div class="form-group">
                         <label for="Password" class="text-uppercase">Password</label>
