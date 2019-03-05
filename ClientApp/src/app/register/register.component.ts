@@ -26,12 +26,26 @@ export class RegisterComponent implements OnInit {
     cpassword: FormControl;
     email: FormControl;
     modalRef : BsModalRef;
+    errorList: string[];
 
  @ViewChild('template') modal : TemplateRef<any>;
 
     onSubmit() 
     {
-        this.modalRef =  this.modalService.show(this.modal)
+
+        let userDetails = this.insertForm.value;
+
+        this.acct.register(userDetails.username, userDetails.password, userDetails.email).subscribe(result => 
+        {
+          
+            this.router.navigate(['/login']);
+        }, error => 
+        {
+            console.log(error);
+        });
+
+
+        //this.modalRef =  this.modalService.show(this.modal)
     }
 
     // Custom Validator
@@ -71,7 +85,9 @@ export class RegisterComponent implements OnInit {
          this.username = new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(5)]);
          this.password = new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(5)]);
          this.cpassword = new FormControl('',[Validators.required, this.MustMatch(this.password)]);
-         this.email = new FormControl('', [Validators.required]);
+         this.email = new FormControl('', [Validators.required, Validators.email]);
+         this.errorList = [];
+
 
         this.insertForm = this.fb.group(
         {

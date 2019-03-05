@@ -207,4 +207,10 @@ body {
     margin-right: auto
   }
 
+.errorMessage {
+  color: red;
+}
+
+
+
 /*Register CSS END*/

@@ -21,10 +21,27 @@ import { Router } from '@angular/router';
     // Url to access our Web API’s
     private baseUrlLogin : string = "/api/account/login";
 
+    private baseUrlRegister : string = "/api/account/register";
+
     // User related properties
     private loginStatus = new BehaviorSubject<boolean>(this.checkLoginStatus());
     private UserName    = new BehaviorSubject<string>(localStorage.getItem('username'));
     private UserRole    = new BehaviorSubject<string>(localStorage.getItem('userRole'));
+
+
+    // Register Method
+    register(username: string, password: string, email : string ) 
+    {
+        return this.http.post<any>(this.baseUrlRegister, {username, password, email}).pipe(map(result => {
+            //registration was successful
+            return result;
+        
+        }, error => 
+        {
+            return error;
+        }));
+    }
+
 
     //Login Method
     login(username: string, password: string) 
@@ -70,6 +87,7 @@ import { Router } from '@angular/router';
         console.log("Logged Out Successfully");
 
     }
+
 
 
 
