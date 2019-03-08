@@ -27,6 +27,11 @@ export class RegisterComponent implements OnInit {
     email: FormControl;
     modalRef : BsModalRef;
     errorList: string[];
+    modalMessage : string;
+
+   
+
+    test: any[] = [];
 
  @ViewChild('template') modal : TemplateRef<any>;
 
@@ -41,11 +46,23 @@ export class RegisterComponent implements OnInit {
             this.router.navigate(['/login']);
         }, error => 
         {
-            console.log(error);
+           
+            this.errorList = [];
+
+            for(var i = 0; i < error.error.value.length; i++) 
+            {
+              this.errorList.push(error.error.value[i]);
+              //console.log(error.error.value[i]);
+            }
+
+            console.log(error)
+            this.modalMessage = "Your Registration Was Unsuccessful";
+            this.modalRef =  this.modalService.show(this.modal)
         });
 
 
-        //this.modalRef =  this.modalService.show(this.modal)
+
+
     }
 
     // Custom Validator
