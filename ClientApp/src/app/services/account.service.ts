@@ -64,6 +64,9 @@ import { Router } from '@angular/router';
                     localStorage.setItem('username', result.username);
                     localStorage.setItem('expiration', result.expiration);
                     localStorage.setItem('userRole', result.userRole);
+                    this.UserName.next(localStorage.getItem('username'));
+                    this.UserRole.next(localStorage.getItem('userRole'));
+
 
                 }
 

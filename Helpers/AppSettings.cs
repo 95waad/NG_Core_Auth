@@ -9,5 +9,10 @@ namespace NG_Core_Auth.Helpers
         public string ExpireTime { get; set; }
         public string Secret { get; set; }
 
+        // Sendgrind
+        public string SendGridKey { get; set; }
+        public string SendGridUser { get; set; }
+
+
     }
 }

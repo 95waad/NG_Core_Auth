@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Sendgrid" Version="9.10.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +57,12 @@
     <Folder Include="Data\" />
     <Folder Include="Helpers\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="Email\" />
+    <Folder Include="Services\" />
+    <Folder Include="Views\" />
+    <Folder Include="Views\Notifications\" />
+    <Folder Include="Views\Shared\" />
+    <Folder Include="wwwroot\custom\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Migrations\20190215024924_InitialCreate.cs" />

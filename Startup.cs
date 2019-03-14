@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NG_Core_Auth.Helpers;
 using System.Text;
+using NG_Core_Auth.Email;
 
 namespace NG_Core_Auth
 {
@@ -29,6 +30,9 @@ namespace NG_Core_Auth
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // Email Sending Service
+            services.AddSendGridEmailSender();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
