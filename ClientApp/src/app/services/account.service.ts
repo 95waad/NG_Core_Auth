@@ -96,6 +96,11 @@ import { Router } from '@angular/router';
 
     checkLoginStatus() : boolean 
     {
+        var loginCookie = localStorage.getItem("loginStatus");
+        if(loginCookie == "1") 
+        {
+            return true;
+        }
         return false;
     }
 
