@@ -6,13 +6,12 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
-import { ProductsComponent } from './products/products.component';
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
-import { ProductUpdateComponent } from './products/product-update/product-update.component';
+
 
 
 @NgModule({
@@ -22,10 +21,9 @@ import { ProductUpdateComponent } from './products/product-update/product-update
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ProductsComponent,
     ProductDetailsComponent,
-    ProductListComponent,
-    ProductUpdateComponent,
+    ProductListComponent
+
    
 
   ],
