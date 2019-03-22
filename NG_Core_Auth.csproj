@@ -21,7 +21,6 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
-    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     <None Remove="ClientApp\.git\COMMIT_EDITMSG" />
     <None Remove="ClientApp\.git\HEAD" />
     <None Remove="ClientApp\.git\config" />
@@ -49,6 +48,7 @@
     <None Remove="ClientApp\.git\objects\29\8d6937277371df0caf29dc242403d5a79b1940" />
     <None Remove="ClientApp\.git\objects\2c\3ba2995c8510c02ca812f90280146738f162cf" />
     <None Remove="ClientApp\.git\objects\36\12073bc31cd4c1f5d6cbb00318521e9a61bd8a" />
+    <None Remove="ClientApp\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,8 +62,6 @@
     <Folder Include="Views\Notifications\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\custom\" />
-    <Folder Include="ClientApp\src\app\interfaces\" />
-    <Folder Include="ClientApp\src\app\products\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Migrations\20190215024924_InitialCreate.cs" />
@@ -85,8 +83,8 @@
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 
     <!-- Include the newly-built files in the publish output -->
-    <ItemGroup>
-      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+    <ItemGroup> 
+     <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
       <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
       <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
