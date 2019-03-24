@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Product } from '../../interfaces/product';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 
 
@@ -46,13 +47,23 @@ import { Observable } from 'rxjs';
 
 
     // Datatables Properties
+    dtOptions: DataTables.Settings = {};
+    dtTrigger: Subject<any> = new Subject();
+
+    @ViewChild(DataTableDirective) dtElement: DataTableDirective;
 
 
 
 
   constructor() { }
 
-  ngOnInit() {
+    ngOnInit() {
+        this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 5,
+            autoWidth: true,
+            order: [[0, 'desc']]
+        };
   }
 
 }
