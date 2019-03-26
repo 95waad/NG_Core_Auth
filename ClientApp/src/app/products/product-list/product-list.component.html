@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <button class="btn btn-warning mb-3 float-right text-uppercase"><i class="fa fa-plus"></i> Add Product</button>
-  <table class="table table-bordered row-border hover" style="width:100%">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border hover" style="width:100%">
     <thead class="text-center thead-dark">
       <tr>
         <th>Id</th>
@@ -13,13 +13,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="text-center">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><img style="float:right" width="75" /></td>
+      <tr *ngFor="let product of products" class="text-center">
+        <td>{{product.productId}}</td>
+        <td>{{product.name | uppercase}}</td>
+        <td>{{product.description}}</td>
+        <td>{{true == product.outofstock ?  'No ': 'Yes '}}</td>
+        <td>{{product.price | currency: 'CAD':'symbol-narrow':'.2'}</td>
+        <td><img [src]="product.imageUrl" *ngIf="product.imageUrl" style="float:right" width="75" /></td>
         <td>
           <div class="btn-group mt-2" role="group">
             <button type="button" class="btn btn-success"><i class="fa fa-list"></i></button>

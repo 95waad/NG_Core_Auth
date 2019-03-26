@@ -4,6 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Product } from '../../interfaces/product';
 import { Observable, Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { ProductService } from '../../services/product.service';
 
 
 
@@ -55,7 +56,7 @@ import { DataTableDirective } from 'angular-datatables';
 
 
 
-  constructor() { }
+  constructor(private productservice : ProductService) { }
 
     ngOnInit() {
         this.dtOptions = {
@@ -63,7 +64,17 @@ import { DataTableDirective } from 'angular-datatables';
             pageLength: 5,
             autoWidth: true,
             order: [[0, 'desc']]
-        };
+            };
+
+        this.products$ = this.productservice.getProducts();
+
+        this.products$.subscribe(result => { 
+            this.products = result; 
+
+            this.dtTrigger.next();
+        });
+
+
   }
 
 }

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { ProductListComponent } from './product-list/product-list.component';
     ProductsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    DataTablesModule
   ]
 })
 export class ProductsModule { }
