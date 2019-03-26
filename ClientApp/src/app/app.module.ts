@@ -10,6 +10,7 @@ import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DataTablesModule } from 'angular-datatables';
+import { AccessDeniedComponent } from './errors/access-denied/access-denied.component';
 
 
 
@@ -20,6 +21,7 @@ import { DataTablesModule } from 'angular-datatables';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
+    AccessDeniedComponent,
 
 
    
