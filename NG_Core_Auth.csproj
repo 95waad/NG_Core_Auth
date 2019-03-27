@@ -62,6 +62,7 @@
     <Folder Include="Views\Notifications\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\custom\" />
+    <Folder Include="ClientApp\src\app\_helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Migrations\20190215024924_InitialCreate.cs" />

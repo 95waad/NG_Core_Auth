@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DataTablesModule } from 'angular-datatables';
 import { AccessDeniedComponent } from './errors/access-denied/access-denied.component';
-
+import { JwtInterceptor } from './_helpers/jwt.Interceptor';
 
 
 @NgModule({
