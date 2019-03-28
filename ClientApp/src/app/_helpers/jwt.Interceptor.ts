@@ -20,10 +20,11 @@ export class JwtInterceptor implements HttpInterceptor {
 
         if (currentuser && token !== undefined) 
         {
-            request : request.clone({
+            request = request.clone({
                 setHeaders: 
                 {
-                    Authorization: `Bearer ${token}`
+                     Authorization: `Bearer ${token}` 
+                    
                 }
             });
         }

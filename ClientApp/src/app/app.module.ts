@@ -7,11 +7,12 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DataTablesModule } from 'angular-datatables';
 import { AccessDeniedComponent } from './errors/access-denied/access-denied.component';
 import { JwtInterceptor } from './_helpers/jwt.Interceptor';
+import { AuthGuardService } from './guards/auth-guard.service';
 
 
 @NgModule({
@@ -22,10 +23,6 @@ import { JwtInterceptor } from './_helpers/jwt.Interceptor';
     RegisterComponent,
     HomeComponent,
     AccessDeniedComponent,
-
-
-   
-
   ],
   imports: [
     BrowserModule,
@@ -34,11 +31,12 @@ import { JwtInterceptor } from './_helpers/jwt.Interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     ModalModule.forRoot(),
-    DataTablesModule
-   
-     
+    DataTablesModule 
   ],
-  providers: [],
+  providers: [
+      AuthGuardService,
+      {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+      ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
