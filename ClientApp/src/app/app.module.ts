@@ -31,7 +31,8 @@ import { AuthGuardService } from './guards/auth-guard.service';
     ReactiveFormsModule,
     HttpClientModule,
     ModalModule.forRoot(),
-    DataTablesModule 
+    DataTablesModule ,
+    
   ],
   providers: [
       AuthGuardService,
