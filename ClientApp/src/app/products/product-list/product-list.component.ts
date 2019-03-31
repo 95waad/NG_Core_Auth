@@ -61,7 +61,7 @@ import { ProductService } from '../../services/product.service';
     ngOnInit() {
         this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 5,
+            pageLength: 9,
             autoWidth: true,
             order: [[0, 'desc']]
             };

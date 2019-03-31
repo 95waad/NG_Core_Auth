@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import * as jwt_decode from "jwt-decode";
+import { decode } from 'punycode';
+
 /*
  * The @Injectable decorator has been applied to the AccountService class. 
  * This decorator is used to tell Angular that this class will be used as a service,  
@@ -96,10 +99,39 @@ import { Router } from '@angular/router';
 
     checkLoginStatus() : boolean 
     {
+      
+        const token = localStorage.getItem('jwt');
+        const decoded = jwt_decode(token);
         var loginCookie = localStorage.getItem("loginStatus");
+
         if(loginCookie == "1") 
         {
-            return true;
+            
+            // Check if the cookie is valid
+
+            if(decoded.exp === undefined) 
+            {
+                return false;
+            }
+
+            // Get Current Date Time
+            const date = new Date(0);
+
+             // Convert EXp Time to UTC
+            let tokenExpDate = date.setUTCSeconds(decoded.exp);
+
+            // If Value of Token time greter than 
+
+            if(tokenExpDate.valueOf() > new Date().valueOf()) 
+            {
+                return true;
+            }
+
+            console.log("NEW DATE " + new Date().valueOf());
+            console.log("Token DATE " + tokenExpDate.valueOf());
+
+            return false;
+          
         }
         return false;
     }
