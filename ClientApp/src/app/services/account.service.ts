@@ -100,13 +100,18 @@ import { decode } from 'punycode';
     checkLoginStatus() : boolean 
     {
       
-        const token = localStorage.getItem('jwt');
-        const decoded = jwt_decode(token);
         var loginCookie = localStorage.getItem("loginStatus");
 
         if(loginCookie == "1") 
         {
-            
+            if(localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === undefined) 
+            {
+                return false;
+            }
+
+             // Get and Decode the Token
+             const token = localStorage.getItem('jwt');
+             const decoded = jwt_decode(token);
             // Check if the cookie is valid
 
             if(decoded.exp === undefined) 

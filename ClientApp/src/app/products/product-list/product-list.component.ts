@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Product } from '../../interfaces/product';
 import { Observable, Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
@@ -56,7 +56,43 @@ import { ProductService } from '../../services/product.service';
 
 
 
-  constructor(private productservice : ProductService) { }
+    constructor(private productservice : ProductService,
+        private modalService: BsModalService,
+        private fb: FormBuilder) { }
+
+    /// Load Add New product Modal
+    onAddProduct() 
+    {
+        this.modalRef = this.modalService.show(this.modal);
+    }
+
+      // Method to Add new Product
+    onSubmit() 
+    {
+        let newProduct = this.insertForm.value;
+
+        this.productservice.insertProduct(newProduct).subscribe(
+            result => 
+            {
+                this.productservice.clearCache();
+                this.products$ = this.productservice.getProducts();
+
+                    this.products$.subscribe(newlist => {
+                    this.products = newlist;
+                    this.modalRef.hide();
+                    this.insertForm.reset();
+                    this.dtTrigger.next();
+
+                
+                    });
+                console.log("New Product added");
+
+            },
+            error => console.log('Could not add Product')
+              
+            )
+
+    }
 
     ngOnInit() {
         this.dtOptions = {
@@ -72,6 +108,28 @@ import { ProductService } from '../../services/product.service';
             this.products = result; 
 
             this.dtTrigger.next();
+        });
+
+        // Modal Message
+        this.modalMessage = "All Fields Are Mandatory";
+
+        // Initializing Add product properties
+
+        let validateImageUrl: string = '^(https?:\/\/.*\.(?:png|jpg))$';
+
+        this.name = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+        this.price = new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000)]);
+        this.description = new FormControl('', [Validators.required, Validators.maxLength(150)]);
+        this.imageUrl = new FormControl('', [Validators.pattern(validateImageUrl)]);
+        
+        this.insertForm = this.fb.group({
+
+                'name' : this.name,
+                'price' : this.price,
+                'description' : this.description,
+                'imageUrl' : this.imageUrl,
+                'outOfStock' : true,
+        
         });
 
 
