@@ -109,6 +109,50 @@ import { ProductService } from '../../services/product.service';
         });
     }
 
+    // Update an Existing Product
+    onUpdate() 
+    {
+        let editProduct = this.updateForm.value;
+        this.productservice.updateProduct(editProduct.id, editProduct).subscribe(
+        result => 
+        {
+            console.log('Product Updated');
+            this.productservice.clearCache();
+            this.products$ = this.productservice.getProducts();
+            this.products$.subscribe(updatedlist => 
+             { 
+                this.products = updatedlist; 
+ 
+                  this.modalRef.hide();
+                  this.rerender();
+            });
+        },
+            error => console.log('Could Not Update Product')
+        )
+    }
+
+    // Load the update Modal
+
+    onUpdateModal(productEdit: Product) : void
+    {
+        this._id.setValue(productEdit.productId);
+        this._name.setValue(productEdit.name);
+        this._price.setValue(productEdit.price);
+        this._description.setValue(productEdit.description);
+        this._imageUrl.setValue(productEdit.imageUrl);
+
+        this.updateForm.setValue({
+            'id' : this._id.value,
+            'name' : this._name.value,
+            'price' :  this._price.value,
+            'description' : this._description.value,
+            'imageUrl' : this._imageUrl.value,
+            'outOfStock' : true
+         });
+
+        this.modalRef = this.modalService.show(this.editmodal);
+
+    }
    
 
     ngOnInit() {
@@ -149,7 +193,25 @@ import { ProductService } from '../../services/product.service';
                 'imageUrl' : this.imageUrl,
                 'outOfStock' : true,
         
-        });
+                });
+
+        // Initializing Update Product properties
+        this._name = new FormControl('',[Validators.required, Validators.maxLength(50)]); 
+        this._price = new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000)]);
+        this._description = new FormControl('', [Validators.required, Validators.maxLength(150)]);
+        this._imageUrl = new FormControl('', [Validators.pattern(validateImageUrl)]);
+        this._id = new FormControl();
+
+        this.updateForm = this.fb.group(
+            {
+                'id' : this._id,
+                'name' : this._name,
+                'price' : this._price,
+                'description' : this._description,
+                'imageUrl' : this._imageUrl,
+                'outOfStock' : true
+
+            });
 
 
     }
