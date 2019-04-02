@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Product } from '../../interfaces/product';
@@ -13,7 +13,7 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-    export class ProductListComponent implements OnInit {
+    export class ProductListComponent implements OnInit, OnDestroy {
 
     // For the FormControl - Adding products
     insertForm: FormGroup;
@@ -58,7 +58,8 @@ import { ProductService } from '../../services/product.service';
 
     constructor(private productservice : ProductService,
         private modalService: BsModalService,
-        private fb: FormBuilder) { }
+        private fb: FormBuilder,
+        private chRef : ChangeDetectorRef) { }
 
     /// Load Add New product Modal
     onAddProduct() 
@@ -81,8 +82,7 @@ import { ProductService } from '../../services/product.service';
                     this.products = newlist;
                     this.modalRef.hide();
                     this.insertForm.reset();
-                    this.dtTrigger.next();
-
+                    this.rerender();
                 
                     });
                 console.log("New Product added");
@@ -93,6 +93,23 @@ import { ProductService } from '../../services/product.service';
             )
 
     }
+
+    // We will use this method to destroy old table and re-render new table
+
+    rerender() 
+    {
+        this.dtElement.dtInstance.then((dtInstance : DataTables.Api) => 
+        {
+            // Destroy the table first in the current context
+            dtInstance.destroy();
+
+            // Call the dtTrigger to rerender again
+           this.dtTrigger.next();
+
+        });
+    }
+
+   
 
     ngOnInit() {
         this.dtOptions = {
@@ -106,6 +123,8 @@ import { ProductService } from '../../services/product.service';
 
         this.products$.subscribe(result => { 
             this.products = result; 
+
+            this.chRef.detectChanges();
 
             this.dtTrigger.next();
         });
@@ -133,6 +152,12 @@ import { ProductService } from '../../services/product.service';
         });
 
 
-  }
+    }
+
+     ngOnDestroy() 
+    {
+        // Do not forget to unsubscribe
+        this.dtTrigger.unsubscribe();
+    }
 
 }
