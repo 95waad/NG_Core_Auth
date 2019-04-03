@@ -5,6 +5,7 @@ import { Product } from '../../interfaces/product';
 import { Observable, Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ProductService } from '../../services/product.service';
+import { Router } from '@angular/router';
 
 
 
@@ -59,7 +60,8 @@ import { ProductService } from '../../services/product.service';
     constructor(private productservice : ProductService,
         private modalService: BsModalService,
         private fb: FormBuilder,
-        private chRef : ChangeDetectorRef) { }
+        private chRef : ChangeDetectorRef,
+        private router: Router) { }
 
     /// Load Add New product Modal
     onAddProduct() 
@@ -153,7 +155,29 @@ import { ProductService } from '../../services/product.service';
         this.modalRef = this.modalService.show(this.editmodal);
 
     }
-   
+
+    // Method to Delete the product
+    onDelete(product : Product) : void
+    {
+        this.productservice.deleteProduct(product.productId).subscribe(result => 
+        {
+            this.productservice.clearCache();
+            this.products$ = this.productservice.getProducts();
+            this.products$.subscribe(newlist => 
+            {
+                this.products = newlist;
+
+               this.rerender();
+            })
+        })
+    }
+
+    onSelect(product: Product) : void 
+    {
+        this.selectedProduct = product;
+
+       this.router.navigateByUrl("/products/" + product.productId);
+    }
 
     ngOnInit() {
         this.dtOptions = {
