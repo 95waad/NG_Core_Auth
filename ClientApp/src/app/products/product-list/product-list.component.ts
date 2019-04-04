@@ -6,6 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
+import { AccountService } from '../../services/account.service';
 
 
 
@@ -61,7 +62,8 @@ import { Router } from '@angular/router';
         private modalService: BsModalService,
         private fb: FormBuilder,
         private chRef : ChangeDetectorRef,
-        private router: Router) { }
+        private router: Router,
+        private acct: AccountService) { }
 
     /// Load Add New product Modal
     onAddProduct() 
@@ -196,6 +198,9 @@ import { Router } from '@angular/router';
 
             this.dtTrigger.next();
         });
+
+       this.acct.currentUserRole.subscribe(result => {this.userRoleStatus = result});
+
 
         // Modal Message
         this.modalMessage = "All Fields Are Mandatory";
